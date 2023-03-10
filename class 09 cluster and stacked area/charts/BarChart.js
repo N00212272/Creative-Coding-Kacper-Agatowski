@@ -65,7 +65,7 @@ class BarChart {
     for(let x=0; x<labels.length; x++){
       let value = labels[x];
       fill(0);
-      textAlign(LEFT,CENTER);
+      textAlign(LEFT,CENTER)
       text(value,x*dataUnit + (dataWidth/2),this.margin);
     }
     textSize(30);

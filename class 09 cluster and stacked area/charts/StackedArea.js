@@ -122,26 +122,27 @@ class StackedArea {
     translate(this.margin);  
     for (let y=0; y<this.dataArray.length;y++){
       let ary = this.dataArray[y];
+      beginShape()
     for(let x=0;x<this.data.getRowCount();x++){
         noStroke();
-        let stack = int(-this.data.rows[x].obj[ary]) 
-        rect(x*dataUnit+this.margin,0,dataWidth,this.dataScaled(stack))
-        // let value =int(-this.data.rows[x].obj[this.xValue1])  
+        // let stack = int(-this.data.rows[x].obj[ary]) 
+        // rect(x*dataUnit+this.margin,0,dataWidth,this.dataScaled(stack))
+        let value =int(-this.data.rows[x].obj[this.xValue1])  
         // let value2 = int(-this.data.rows[x].obj[this.xValue2])
         // let value3 = int(-this.data.rows[x].obj[this.xValue3])
         // let value4 = int(-this.data.rows[x].obj[this.xValue4])
        textSize(20)
 
-        // fill(0,0,255)
-        // beginShape()
-        //     let a = this.width;
-        //     let b =  value;
-        //     vertex(a,b);
+        fill(0,0,255)
+        
+            let a = this.width;
+            let b =  this.dataScaled(value);
+            vertex(a,b);
            
-        //     endShape(CLOSE)
+            
         //     console.log(a,b)
         }
-        
+        endShape(CLOSE)
         // rect(x*dataUnit+this.margin,this.dataScaled(value2),dataWidth,this.dataScaled(value));
         
       }

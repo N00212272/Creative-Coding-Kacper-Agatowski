@@ -109,19 +109,20 @@ class ClusteredChart {
  
   
   let dataUnit = dataWidth + this.dataGap ;
-  
 
   push()
   translate(this.margin);  
   
   for(let y=0; y<this.dataArray.length;y++){
     let ary = this.dataArray[y];
-  
- for(let x=0;x<this.data.getRowCount();x++){
+   
+    for(let x=0;x<this.data.getRowCount();x++){
         noStroke();
         let clus = int(-this.data.rows[x].obj[ary])          
-          fill(0,0,255)
           rect(x*dataUnit+this.margin,0,dataWidth,this.dataScaled(clus));
+          rect(x*dataUnit,0,dataWidth,this.dataScaled(clus));
+          // rect(x*dataUnit,0,dataWidth,this.dataScaled(clus));
+
           
         }
         

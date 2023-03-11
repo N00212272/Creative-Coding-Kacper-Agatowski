@@ -1,4 +1,6 @@
 //passing a parameter and calling this height to whatever the height is placed
+
+//this stacked i created before figuring out how to properly do a nested for loop with the average line working perfectly and allowing up to four values in and stacking 
 class StackedChart {
     constructor(_height, _width, _posX, _posY, _data, _numTicks,_title,_yValue,_yValueTitle,_xValue1,_xValue2,_xValue3,_xValue4){
       this.height =  _height;
@@ -114,7 +116,7 @@ class StackedChart {
   
    drawBarData1(){
   
-    let dataWidth =( this.width - (this.margin*2) - (this.data.getRowCount()-1)* this.dataGap) / this.data.getRowCount();
+    let dataWidth =( this.width - (this.margin*2) - (this.data.getRowCount())* this.dataGap) / this.data.getRowCount();
     let dataUnit = dataWidth + this.dataGap;
 
     push();
@@ -127,7 +129,7 @@ class StackedChart {
         let value3 = int(-this.data.rows[x].obj[this.xValue3])
         let value4 = int(-this.data.rows[x].obj[this.xValue4])
        textSize(20)
-        fill(0,0,255)
+        fill(0,75,255)
         rect(x*dataUnit+this.margin,this.dataScaled(value2),dataWidth,this.dataScaled(value));
         text(this.xValue1,this.width/4,this.height/6)       
         fill(255,0,0)

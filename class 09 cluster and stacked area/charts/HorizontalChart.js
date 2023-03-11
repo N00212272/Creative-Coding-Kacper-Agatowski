@@ -109,7 +109,7 @@ drawBarData(){
       noStroke();
       
       let value =int(-this.data.rows[x].obj[this.yValue])    
-      fill(this.colourScaled(-value),50,50)
+      fill(this.colourScaled(-value),0,0)
       rect(0,-x*dataUnit+-this.margin,-this.dataScaled(value),-dataWidth);
     }
     pop();

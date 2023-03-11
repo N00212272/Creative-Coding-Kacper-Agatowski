@@ -10,10 +10,9 @@ class StackedChart2 {
 		_title,
 		_yValue,
 		_yValueTitle,
-		_xValue1,
-		_xValue2,
-		_xValue3,
-		_xValue4
+		_total,
+		_dataArray
+		
 	) {
 		this.height = _height;
 		this.width = _width;
@@ -23,15 +22,13 @@ class StackedChart2 {
 		this.margin = 20;
 		this.numTicks = _numTicks;
 		this.dataGap = 10;
-		this.xValue1 = _xValue1;
-		this.xValue2 = _xValue2;
-		this.xValue3 = _xValue3;
-		this.xValue4 = _xValue4;
+		
 		this.yValue = _yValue;
 		this.yValueTitle = _yValueTitle;
-		this.title = _title;
-		this.dataArray = [_xValue1, _xValue2, _xValue3, _xValue4];
-		this.colourPallete = ["#61BDAC", "#FF494D", "#CDFF64", "#61BDAC"];
+		this.title = _title
+		this.total = _total
+		this.dataArray = _dataArray;
+		this.colourPallete = ["#C73A40", "#416FEC", "#F77C3F", "#76332F"];
 
 		this.highestNum = this.maximumValue();
 	}
@@ -42,19 +39,18 @@ class StackedChart2 {
 		this.drawXAxis();
 		this.drawYAxis();
 		this.drawBarData1();
-		//this.averageLine();
+		this.averageLine();
 		pop();
 	}
 	maximumValue() {
 		let highest = 0;
-		for (let y = 0; y < this.dataArray.length; y++) {
-			let ary = this.dataArray[y];
+		
 			for (let x = 0; x < this.data.getRowCount(); x++) {
-				if (int(data.rows[x].obj.Total) > highest) {
-					highest = int(data.rows[x].obj.Total);
+				if (int(data.rows[x].obj[this.total]) > highest) {
+					highest = int(data.rows[x].obj[this.total]);
 				}
 			}
-		}
+		
 		//managing the rounding
 		for (let x = highest; x < 1000000; x++) {
 			if (x % this.numTicks == 0 && x % 10 == 0) {
@@ -62,7 +58,7 @@ class StackedChart2 {
 				break;
 			}
 		}
-		console.log(highest);
+		
 		return highest;
 	}
 
@@ -135,7 +131,7 @@ class StackedChart2 {
 			translate(x * dataUnit + this.margin, 0);
 			
             for (let y = 0; y < this.dataArray.length; y++) {
-				console.log(this.dataArray);
+				
 				let ary = this.dataArray[y];
 				let col = this.colourPallete[y];
 
@@ -146,10 +142,25 @@ class StackedChart2 {
 
 				rect(0, 0, dataWidth, -this.dataScaled(stack));
 				translate(0, -this.dataScaled(stack));
+				
 			}
+			
 			pop();
+			
+			
 		}
 		pop();
+
+		//Legend
+		push()
+	
+		for (let i=0; i<this.dataArray.length;i++){
+			let ary = this.dataArray[i];
+			let col = this.colourPallete[i];
+			fill(color(col))
+			text( ary,i*this.width/8,this.height/4)
+		}
+		pop()
 	}
 
 	averageLine() {
@@ -160,84 +171,41 @@ class StackedChart2 {
 			this.data.getRowCount();
 		let dataUnit = dataWidth + this.dataGap;
 		push();
-		//Had to do -1 as it is looking for the next value which doesnt exist
-		for (let x = 0; x < this.data.getRowCount() - 1; x++) {
+		translate(this.margin);
+		
+		for (let x = 0; x < this.data.getRowCount()-1; x++) {
+			push()
 			let sum = 0;
-			sum +=
-				int(-this.data.rows[x].obj[this.xValue1]) +
-				int(-this.data.rows[x].obj[this.xValue2]) +
-				int(-this.data.rows[x].obj[this.xValue3]) +
-				int(-this.data.rows[x].obj[this.xValue4]);
-			let sum2 = 0;
-			sum2 +=
-				int(-this.data.rows[x + 1].obj[this.xValue1]) +
-				int(-this.data.rows[x + 1].obj[this.xValue2]) +
-				int(-this.data.rows[x + 1].obj[this.xValue3]) +
-				int(-this.data.rows[x + 1].obj[this.xValue4]);
+				let sum2 = 0;
+				// let ary = this.dataArray[y];
 
-			if (this.xValue4 === undefined && this.xValue3 === undefined) {
-				let avg = sum / 2;
-				let avg2 = sum2 / 2;
-				// console.log(avg)
-				stroke(10);
-				line(
-					x * dataUnit + dataWidth / 2 + this.margin,
-					avg,
-					(x + 1) * dataUnit + dataWidth / 2 + this.margin,
-					avg2
-				);
-				line(
-					this.width / 1.1,
-					this.height / 6,
-					this.width / 1.15,
-					this.height / 6
-				);
-				noStroke();
-				textSize(20);
-				text("average", this.width / 1, this.height / 6);
-			} else if (this.xValue4 === undefined) {
-				let avg = sum / 3;
-				let avg2 = sum2 / 3;
-				// console.log(avg)
-				stroke(10);
-				line(
-					x * dataUnit + dataWidth / 2 + this.margin,
-					avg,
-					(x + 1) * dataUnit + dataWidth / 2 + this.margin,
-					avg2
-				);
-				line(
-					this.width / 1.1,
-					this.height / 6,
-					this.width / 1.15,
-					this.height / 6
-				);
-				noStroke();
-				textSize(20);
-				text("average", this.width / 1, this.height / 6);
-			} else {
-				let avg = sum / 4;
-				let avg2 = sum2 / 4;
-				console.log(sum, sum2);
-				stroke(10);
-				line(
-					x * dataUnit + dataWidth / 2 + this.margin,
-					avg,
-					(x + 1) * dataUnit + dataWidth / 2 + this.margin,
-					avg2
-				);
-				line(
-					this.width / 1.1,
-					this.height / 6,
-					this.width / 1.15,
-					this.height / 6
-				);
-				noStroke();
-				textSize(20);
-				text("average", this.width / 1, this.height / 6);
-				console.log(avg, avg2);
+				sum += (int(data.rows[x].obj[this.dataArray[1]]))
+				sum2 +=  (int(data.rows[x].obj[this.dataArray[0]]))
+			
+				
+				let finalSum = sum + sum2;
+				
+				let avg = finalSum/this.dataArray.length;
+				
+				console.log(avg)
+				stroke(50)
+				
+				line(x*dataUnit + (dataWidth/2)+this.margin,-avg,(x+1)*dataUnit + (dataWidth/2)+this.margin,-avg)
+				
+				
+				pop()
 			}
+			
+				
+
+				pop();
+			}
+			
+			
 		}
-		pop();
-	}
-}
+		
+		
+			
+		
+	
+

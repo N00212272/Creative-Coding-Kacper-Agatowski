@@ -65,10 +65,11 @@ class BarChart {
     for(let x=0; x<labels.length; x++){
       let value = labels[x];
       fill(0);
+      textSize(20)
       textAlign(LEFT,CENTER)
       text(value,x*dataUnit + (dataWidth/2),this.margin);
     }
-    textSize(30);
+    textSize(40);
     text(this.xValue,this.width/2,60)
     pop()
     textAlign(CENTER)
@@ -87,7 +88,7 @@ class BarChart {
       let textGap = this.highestNum/this.numTicks;
       noStroke();
       fill(50);
-      textSize(20);
+      textSize(30);
       textAlign(RIGHT,CENTER);
       text((textGap * x).toFixed(0), -this.margin, -tickWidth * x);
       }
@@ -106,7 +107,7 @@ class BarChart {
     for(let x=0;x<this.data.getRowCount();x++){
         noStroke();
         let value =int(-this.data.rows[x].obj[this.yValue])   
-        fill(this.colourScaled(-value),100,50) 
+        fill(0,0,this.colourScaled(-value)) 
         rect(x*dataUnit+this.margin,0,dataWidth,this.dataScaled(value));
       }
       pop();

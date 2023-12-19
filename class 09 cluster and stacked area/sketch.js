@@ -2,7 +2,6 @@
 // let fruits = [23, 56, 100, 80 ,45]
 // let dogs = [23, 56, 100, 80 ,45]
 let data;
-let clusData;
 let charts = [];
 // objVal = Object.values(data.getObject());
 
@@ -10,8 +9,6 @@ let charts = [];
 
 function preload() {
   data = loadTable('data/SucideStat.csv','csv','header');
-
-
 }
 
 
@@ -34,7 +31,7 @@ function setup(){
       data, 
       5,
       'Year',
-      'Total',
+      'Male',
       'Number of Total deaths',
       'BarChart Total Suicides in Ireland '))
     //The stacked chart is able to stack from one to 4 data sets.
